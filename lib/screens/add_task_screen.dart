@@ -3,8 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:todo_test_app/model/task.dart';
 import 'package:todo_test_app/model/task_list_data.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
+  @override
+  _AddTaskScreenState createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
   String todoText = "";
+
   @override
   Widget build(BuildContext context) => Container(
         color: Color(0xff757575),
@@ -33,7 +39,9 @@ class AddTaskScreen extends StatelessWidget {
                 TextField(
                   autofocus: true,
                   textAlign: TextAlign.center,
-                  onChanged: (value){ todoText = value;},
+                  onChanged: (value){
+                    todoText = value;
+                    },
                   decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -50,9 +58,9 @@ class AddTaskScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  onPressed: () {
-                    final taskList = Provider.of<TaskListData>(context);
-                    taskList
+                  onPressed: () async {
+                    final taskList = Provider.of<TaskListDataNotifier>(context);
+                    await taskList
                         .addTask(Task(name: todoText, isChecked: false));
                     Navigator.pop(context);
                   },

@@ -7,7 +7,7 @@ import 'package:todo_test_app/widgets/todo_item.dart';
 class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<TaskListData>(
+    return Consumer<TaskListDataNotifier>(
       builder: (context, taskListData, child) {
         return ListView.builder(
           itemBuilder: (context, index) {

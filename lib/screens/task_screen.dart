@@ -5,7 +5,6 @@ import 'package:todo_test_app/screens/add_task_screen.dart';
 import 'package:todo_test_app/widgets/todo_list.dart';
 
 class TaskScreen extends StatelessWidget {
-  final taskListData = TaskListData();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class TaskScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      Provider.of<TaskListData>(context).undoneTasks().toString(),
+                      Provider.of<TaskListDataNotifier>(context).undoneTasks.toString(),
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     SizedBox(

@@ -1,33 +1,42 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+import 'package:todo_test_app/data/task_data.dart';
 import 'task.dart';
 
-class TaskListData with ChangeNotifier {
-  final List<Task> taskList = [
-    Task(name: "task1", isChecked: true),
-    Task(name: "task2", isChecked: false),
-    Task(name: "task3", isChecked: false),
-    Task(name: "task4", isChecked: false),
-  ];
+class TaskListDataNotifier with ChangeNotifier {
+  final List<Task> taskList;
+  final TaskListStorage taskStorage;
 
-  undoneTasks() => taskList.where((t)=>!t.isChecked).length;
-  void addTask(Task task) {
+  TaskListDataNotifier(this.taskList, this.taskStorage);
+
+  get undoneTasks => taskList.where((t)=>!t.isChecked).length;
+
+  Future setTasks(List<Task> tasks){
+    taskList.clear();
+    taskList.addAll(tasks);
+    notifyListeners();
+  }
+
+  Future addTask(Task task) async {
     taskList.add(task);
     notifyListeners();
+    await taskStorage.setTasks(taskList);
   }
 
-  void removeTask(int pos) {
+  Future removeTask(int pos) async {
     taskList.removeAt(pos);
     notifyListeners();
+    await taskStorage.setTasks(taskList);
   }
 
-  void updateTask(int pos, Task newTask) {
+  Future updateTask(int pos, Task newTask) async {
     taskList[pos] = newTask;
     notifyListeners();
+    await taskStorage.setTasks(taskList);
   }
 
-  void toggleTask(int pos){
+  Future toggleTask(int pos) async {
     taskList[pos].toggle();
     notifyListeners();
+    await taskStorage.setTasks(taskList);
   }
 }
